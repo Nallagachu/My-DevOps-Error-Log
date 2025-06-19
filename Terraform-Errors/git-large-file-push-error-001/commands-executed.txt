@@ -1,0 +1,217 @@
+
+# --- Original Push Error & Initial Attempts ---
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ git status
+
+On branch main
+
+Untracked files:
+
+ (use "git add <file>..." to include in what will be committed)
+
+         ec2/windows_amd64/terraform-provider-aws_v5.98.0_x5.exe
+
+
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ rm ec2/windows_amd64/terraform-provider-aws_v5.98.0_x5.exe
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ git status
+
+On branch main
+
+nothing to commit, working tree clean
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ git add . ; git commit -m "pushing code to git " ; git push origin main
+
+[main 17e8ae5] pushing code to git
+
+ 1 file changed, 1 insertion(+)
+
+Uploading LFS objects: 100% (1/1), 714 MB | 0 B/s, done.
+
+Enumerating objects: 57, done.
+
+Counting objects: 100% (57/57), done.
+
+Delta compression using up to 12 threads
+
+Compressing objects: 100% (53/53), done.
+
+Writing objects: 100% (57/57), 142.58 MiB | 7.54 MiB/s, done.
+
+Total 57 (delta 20), reused 0 (delta 0), pack-reused 0 (from 0)
+
+remote: Resolving deltas: 100% (20/20), done.
+
+remote: error: Trace: 3def8e81c5c811eec2c6359af44e06ff156dbb6e5b410215bd6e1ddc77cf5cd7
+
+remote: error: See https://gh.io/lfs for more information.
+
+remote: error: File ec2/windows_amd64/terraform-provider-aws_v5.98.0_x5.exe is 681.12 MB; this exceeds GitHub's file size limit of 100.00 MB
+
+remote: error: GH001: Large files detected. You may want to try Git Large File Storage - https://git-lfs.github.com.
+
+To https://github.com/Nallagachu/terraform.git
+
+ ! [remote rejected] main -> main (pre-receive hook declined)
+
+error: failed to push some refs to 'https://github.com/Nallagachu/terraform.git'
+
+
+
+# --- Python/Pip Setup Troubleshooting ---
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ pip install git-filter-repo
+
+bash: pip: command not found
+
+
+
+PS C:\Users\LENOVO> python -c "import sys; print(sys.executable)"
+
+C:\Users\LENOVO\AppData\Local\Programs\Python\Python313\python.exe
+
+
+
+# Manual steps (editing ~/.bashrc and restarting Git Bash) would go here.
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ python --version
+
+pip --version
+
+Python 3.13.5
+
+pip 25.1.1 from C:\Users\LENOVO\AppData\Local\Programs\Python\Python313\Lib\site-packages\pip (python 3.13)
+
+
+
+# --- Install git-filter-repo ---
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ pip install git-filter-repo
+
+# ... (installation output for git-filter-repo would appear here)
+
+
+
+# --- Run git filter-repo ---
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ cd /c/devops/repos/terraform # Confirming current directory for clarity
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ git filter-repo --path ec2/windows_amd64/terraform-provider-aws_v5.98.0_x5.exe --invert-paths --force
+
+# ... (git-filter-repo processing output would appear here)
+
+
+
+# --- Clean Git references ---
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ git reflog expire --expire=now --all
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ git gc --prune=now
+
+# ... (git gc output would appear here, showing pruning and packing)
+
+
+
+# --- Git Remote Troubleshooting ---
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ git push origin main --force
+
+fatal: 'origin' does not appear to be a git repository
+
+fatal: Could not read from remote repository.
+
+
+
+Please make sure you have the correct access rights
+
+and the repository exists.
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ git remote -v
+
+# (Output: showed nothing, indicating no remotes configured)
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ git remote add origin https://github.com/Nallagachu/terraform.git
+
+
+
+# --- Final Push ---
+
+
+
+LENOVO@pandujyo MINGW64 /c/devops/repos/terraform (main)
+
+$ git push origin main --force
+
+Enumerating objects: 51, done.
+
+Counting objects: 100% (51/51), done.
+
+Delta compression using up to 12 threads
+
+Compressing objects: 100% (31/31), done.
+
+Writing objects: 100% (51/51), 13.52 KiB | 6.76 MiB/s, done.
+
+Total 51 (delta 17), reused 51 (delta 17), pack-reused 0 (from 0)
+
+remote: Resolving deltas: 100% (17/17), done.
+
+To https://github.com/Nallagachu/terraform.git
+
+ * [new branch]      main -> main
+
