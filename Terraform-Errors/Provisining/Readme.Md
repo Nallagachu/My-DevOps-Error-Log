@@ -2,7 +2,7 @@
 
 This document tracks the common provisioning errors encountered during a Terraform project and how they were resolved. It includes syntax issues, misconfigurations, and state locking problems while using AWS, `aws_instance` resources, remote backends (S3 & DynamoDB), and provisioners.
 
----
+--- 
 
 ## ⚠️ Error 1: Unclosed Configuration Block
 
